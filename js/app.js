@@ -7,14 +7,27 @@ var Enemy = function() {
   // a helper we've provided to easily load images
   this.sprite = "images/enemy-bug.png";
   this.x = 1;
-  this.y = 250;
+  this.y = 225;
+  this.speed = 50; //do random
 };
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
-  this.x++;
-  this.y;
+  this.x += this.speed * dt;
+  if (this.x > 500) {
+    this.x = 0;
+  }
+  if (
+    this.y > player.y - 50 &&
+    this.y < player.y + 50 &&
+    this.x > player.x - 50 &&
+    this.x < player.x + 50
+  ) {
+    player.x = 250;
+    player.y = 400;
+  }
+
   // You should multiply any movement by the dt parameter
   // which will ensure the game runs at the same speed for
   // all computers.
@@ -26,8 +39,8 @@ Enemy.prototype.render = function() {
 };
 var Hero = function() {
   this.sprite = "images/char-boy.png";
-  this.x = 3;
-  this.y = 6;
+  this.x = 250;
+  this.y = 250;
 };
 Hero.prototype.render = function() {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -35,9 +48,6 @@ Hero.prototype.render = function() {
 Hero.prototype.update = function(dt) {
   this.x;
   this.y;
-  // You should multiply any movement by the dt parameter
-  // which will ensure the game runs at the same speed for
-  // all computers.
 };
 Hero.prototype.handleInput = function(key) {
   switch (key) {
