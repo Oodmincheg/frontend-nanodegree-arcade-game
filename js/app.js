@@ -24,6 +24,7 @@ Enemy.prototype.update = function(dt) {
     this.x > player.x - 50 &&
     this.x < player.x + 50
   ) {
+    player.health--;
     player.x = 250;
     player.y = 400;
   }
@@ -40,7 +41,9 @@ Enemy.prototype.render = function() {
 var Hero = function() {
   this.sprite = "images/char-boy.png";
   this.x = 250;
-  this.y = 250;
+  this.y = 400;
+  this.score = 0;
+  this.health = 2;
 };
 Hero.prototype.render = function() {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -48,6 +51,11 @@ Hero.prototype.render = function() {
 Hero.prototype.update = function(dt) {
   this.x;
   this.y;
+  if (this.y < 0) {
+    this.score++;
+    this.x = 250;
+    this.y = 400;
+  }
 };
 Hero.prototype.handleInput = function(key) {
   switch (key) {
