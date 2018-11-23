@@ -8,7 +8,7 @@ var Enemy = function(y) {
   this.sprite = "images/enemy-bug.png";
   this.x = 1;
   this.y = y;
-  this.speed = 300; //do random
+  this.speed = 100 * (Math.random() * (4 - 1) + 1); //random initial speed for bugs
 };
 
 // Update the enemy's position, required method for game
@@ -16,19 +16,10 @@ var Enemy = function(y) {
 Enemy.prototype.update = function(dt) {
   this.x += this.speed * dt;
   if (this.x > 500) {
+    this.speed = 100 * (Math.random() * (4 - 1) + 1); //random  new speed
     this.x = 0;
   }
-  if (
-    this.y > player.y - 50 &&
-    this.y < player.y + 50 &&
-    this.x > player.x - 50 &&
-    this.x < player.x + 50
-  ) {
-    player.health--;
-    player.x = 250;
-    player.y = 400;
-  }
-
+  this.checkCollision();
   // You should multiply any movement by the dt parameter
   // which will ensure the game runs at the same speed for
   // all computers.
@@ -40,8 +31,8 @@ Enemy.prototype.render = function() {
 };
 var Hero = function() {
   this.sprite = "images/char-boy.png";
-  this.x = 250;
-  this.y = 400;
+  this.x = 203;
+  this.y = 398;
   this.score = 0;
   this.health = 2;
 };
@@ -51,26 +42,38 @@ Hero.prototype.render = function() {
 Hero.prototype.update = function(dt) {
   this.x;
   this.y;
-  if (this.y < 0) {
+  if (this.y < 40) {
     this.score++;
-    this.x = 250;
-    this.y = 400;
+    this.x = 203;
+    this.y = 398;
   }
 };
 Hero.prototype.handleInput = function(key) {
   switch (key) {
     case "left":
-      this.x -= 50;
+      this.x > 50 && (this.x -= 50);
       break;
     case "right":
-      this.x += 50;
+      this.x < 400 && (this.x += 50);
       break;
     case "down":
-      this.y += 50;
+      this.y < 398 && (this.y += 50);
       break;
     case "up":
       this.y -= 50;
       break;
+  }
+};
+Enemy.prototype.checkCollision = function() {
+  if (
+    this.y > player.y - 50 &&
+    this.y < player.y + 50 &&
+    this.x > player.x - 50 &&
+    this.x < player.x + 50
+  ) {
+    player.health--;
+    player.x = 203;
+    player.y = 398;
   }
 };
 // Now write your own player class
