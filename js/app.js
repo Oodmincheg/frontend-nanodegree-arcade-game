@@ -1,5 +1,5 @@
 // Enemies our player must avoid
-var Enemy = function() {
+var Enemy = function(y) {
   // Variables applied to each of our instances go here,
   // we've provided one for you to get started
 
@@ -7,8 +7,8 @@ var Enemy = function() {
   // a helper we've provided to easily load images
   this.sprite = "images/enemy-bug.png";
   this.x = 1;
-  this.y = 225;
-  this.speed = 50; //do random
+  this.y = y;
+  this.speed = 300; //do random
 };
 
 // Update the enemy's position, required method for game
@@ -81,8 +81,10 @@ Hero.prototype.handleInput = function(key) {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 const player = new Hero();
-const enemy1 = new Enemy();
-let allEnemies = [enemy1];
+const enemy1 = new Enemy(50);
+const enemy2 = new Enemy(130);
+const enemy3 = new Enemy(225);
+let allEnemies = [enemy1, enemy2, enemy3];
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
