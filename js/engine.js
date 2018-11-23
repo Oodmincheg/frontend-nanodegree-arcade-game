@@ -38,6 +38,7 @@ var Engine = (function(global) {
      * would be the same for everyone (regardless of how fast their
      * computer is) - hurray time!
      */
+
     var now = Date.now(),
       dt = (now - lastTime) / 1000.0;
 
@@ -55,7 +56,16 @@ var Engine = (function(global) {
     /* Use the browser's requestAnimationFrame function to call this
      * function again as soon as the browser is able to draw another frame.
      */
-    win.requestAnimationFrame(main);
+    if (player.health !== undefined) {
+      if (player.health > 0) {
+        win.requestAnimationFrame(main);
+      } else {
+        ctx.font = "80px serif";
+        ctx.fillText("Game Over", 50, 200);
+      }
+    } else {
+      win.requestAnimationFrame(main);
+    }
   }
 
   /* This function does some initial setup that should only occur once,
